@@ -1,58 +1,75 @@
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <stdlib.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+int stack[100];
+int top = -1;
+char exprn[20];
 
-int compute(char symbol, int op1, int op2)
+void push(int ele)
 {
-  switch (symbol)
+  stack[++top] = ele;
+}
+int pop()
+{
+  return (stack[top--]);
+}
+void compute(int opr1, char ch, int opr2)
+{
+  switch (ch)
   {
   case '+':
-    return op1 + op2;
+    push(opr1 + opr2);
+    break;
   case '-':
-    return op1 - op2;
+    push(opr1 - opr2);
+    break;
   case '*':
-    return op1 * op2;
+    push(opr1 * opr2);
+    break;
   case '/':
-    return op1 / op2;
-  case '$':
-  case '^':
-    return pow(op1, op2);
-  default:
-    return 0;
+    if (opr2 != 0)
+      push(opr1 / opr2);
+    else
+    {
+      printf("\nDivide by Zero Error");
+      exit(0);
+    }
+    break;
   }
 }
 
-int main()
+int eval()
 {
-  int s[20], res, op1, op2, top, i;
-  char postfix[20], symbol;
-
-  printf("\nEnter the postfix expression:\n");
-  scanf("%s", postfix);
-
-  top = -1;
-
-  for (i = 0; i < strlen(postfix); i++)
+  int n = 0, i = 0, flag = 1;
+  char ch;
+  int opr1, opr2;
+  ch = exprn[i++];
+  while (ch != '#')
   {
-    symbol = postfix[i];
-
-    if (isdigit(symbol))
+    printf("\n%c", ch);
+    switch (ch)
     {
-      s[++top] = symbol - '0'; // Convert character to integer
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+      opr2 = pop();
+      opr1 = pop();
+      printf("\n%d %d %c", opr1, opr2, ch);
+      compute(opr1, ch, opr2);
+      break;
+    default:
+      push(ch - '0');
     }
-    else
-    {
-      op2 = s[top--];
-      op1 = s[top--];
-      res = compute(symbol, op1, op2);
-      s[++top] = res;
-    }
+    ch = exprn[i++];
   }
-
-  res = s[top--];
-  printf("\nThe result is: %d\n", res);
-
-  return 0;
+  return pop();
+}
+void main()
+{
+  printf("\n Enter the postfix expn\t");
+  scanf("%s", exprn);
+  strcat(exprn, "#");
+  printf("\n After Evaluation %d", eval());
 }

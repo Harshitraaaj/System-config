@@ -1,104 +1,96 @@
-#include<stdio.h> 
-#include<stdlib.h> 
-#include<string.h> 
-#define MAX 100 
-typedef enum 
-{lparn,rparn,plus,minus,times,divide,mod,eos,operand} predence; 
-char stack[MAX]; 
-char exprn[MAX],postfix[MAX]; 
-static int isp [ ] = {0, 19, 12, 12, 13, 13, 13, 0}; 
-static int icp [ ] = {20, 19, 12, 12, 13, 13, 13, 0}; 
-predence getToken(char *symbol,int *n) 
-{ 
- *symbol = exprn[(*n)++]; 
- switch(*symbol) 
- { 
-  case '(': return lparn; 
-  case ')': return rparn; 
-  case '+': return plus; 
-  case '-': return minus; 
-  case '*': return times; 
-  case '/': return divide; 
-  case '%': return mod; 
-  case '#': return eos; 
-  default: return operand; 
- } 
+#include <stdio.h>
+#include<string.h>
+char stack[100];
+int top = -1;
+void push(char x)
+{
+    stack[++top] = x;
 }
-predence getStackToken(char symbol) 
-{ 
- switch(symbol) 
- { 
-  case '(': return lparn; 
-  case ')': return rparn; 
-  case '+': return plus; 
-  case '-': return minus; 
-  case '*': return times; 
-  case '/': return divide; 
-  case '%': return mod; 
-  case '#': return eos; 
-  default: return operand; 
- } 
-} 
-void push(char ele,int *top) 
-{ 
- stack[++(*top)] = ele; 
-} 
- 
-char pop(int *top) 
-{ 
- char ele; 
- ele=stack[(*top)--]; 
- return(ele); 
-} 
-void convert(char *exprn,char *postfix) 
-{ 
- int n=0,i=0; 
- predence token; 
- char symbol; 
- int opr1,opr2; 
- int top = -1;
- token=getToken(&symbol,&n); 
- while(token!=eos)  
- { 
-  switch(token)   { 
-   case operand:   
-       postfix[i++]=symbol; 
-       break; 
-   case lparn: 
-       push(symbol,&top); 
-       break; 
-   case rparn: 
-       while(stack[top]!='(') 
-       postfix[i++]=pop(&top); 
-       pop(&top); 
-       break; 
-   case plus: 
-      case minus: 
-   case times: 
-   case divide: 
-   case mod: 
-     if(top==-1) 
-       push(symbol,&top); 
-      else 
-      { 
-        while(isp[getStackToken(stack[top])]  >= 
-icp[token] && top!=-1) 
-        postfix[i++]=pop(&top); 
-       push(symbol,&top); 
-      } 
-      break; 
-  } 
-  token=getToken(&symbol,&n); 
- }
- while(top!=-1) 
-  postfix[i++]=pop(&top); 
- postfix[i]='\0'; 
-} 
-void main() 
-{ 
- printf("\n Enter the postfix expn\t"); 
- scanf("%s",exprn); 
- strcat(exprn,"#"); 
- convert(exprn,postfix); 
- printf("\n After Evaluation %s",postfix); 
-} 
+char pop()
+{
+    char ret;
+    ret = stack[top];
+    stack[top] = '\0';
+    top--;
+    return ret;
+}
+int inper(char ch)
+{
+    switch (ch)
+    {
+    case '+':
+    case '-':
+        return 1;
+    case '*':
+    case '/':
+        return 3;
+    }
+}
+
+int stper(char ch)
+{
+    switch (ch)
+    {
+    case '+':
+    case '-':
+        return 2;
+    case '*':
+    case '/':
+        return 4;
+    case '(':
+        return 0;
+    case '#':
+        return -1;
+    }
+}
+void convert(char *exprn, char *postfix)
+{
+    int n = 0, i = 0, j = 0;
+    char ch;
+    ch = exprn[i++];
+    while (ch != '#')
+    {
+        switch (ch)
+        {
+        case '(':
+            push(ch);
+            break;
+
+        case ')':
+            while (stack[top] != '(')
+                postfix[j++] = pop();
+
+            pop();
+            break;
+
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+            while (stper(stack[top]) >= inper(ch))
+                postfix[j++] = pop();
+            push(ch);
+            break;
+        default:
+            postfix[j++] = ch;
+            break;
+        }
+
+        printf("\nSTACK=%s POSTFIX = %s", stack, postfix);
+        ch = exprn[i++];
+    }
+    while (stack[top] != '#')
+        postfix[j++] = pop();
+    postfix[j] = '\0';
+}
+void main()
+{
+    char exprn[20] = "", postfix[20] = "";
+    int i;
+    printf("\n Enter the postfix expn\t");
+    scanf("%s", exprn);
+    strcat(exprn, "#");
+    push('#');
+    convert(exprn, postfix);
+    printf("\n After Evaluation %s", postfix);
+}
