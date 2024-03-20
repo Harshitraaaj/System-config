@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <conio.h>
 void read(char *s)
 {
   gets(s);
