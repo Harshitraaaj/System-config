@@ -16,7 +16,7 @@ struct node
   struct node *llink, *rlink;
 };
 typedef struct node *Node;
-Node front = NULL, rear = NULL;
+
 EMP GetRec()
 {
   EMP temp;

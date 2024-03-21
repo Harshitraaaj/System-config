@@ -45,6 +45,7 @@ void main()
   if(count == m)   { 
    printf("\n~~~Hash table is full. Cannot insert the record %d key~~~",i+1); 
    break; 
+   
   } 
   insert(key[i]); 
  } 

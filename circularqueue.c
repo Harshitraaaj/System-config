@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX_SIZE 5
+
 typedef struct
 {
     int key;
 } element;
+
 element Queue[MAX_SIZE];
 int front = -1;
 int rear = -1;
