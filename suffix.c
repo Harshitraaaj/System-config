@@ -41,7 +41,7 @@ void compute(int opr1, char ch, int opr2)
 
 int eval()
 {
-  int n = 0, i = 0, flag = 1;
+  int i = 0;
   char ch;
   int opr1, opr2;
   ch = exprn[i++];
@@ -66,6 +66,7 @@ int eval()
   }
   return pop();
 }
+
 void main()
 {
   printf("\n Enter the postfix expn\t");

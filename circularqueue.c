@@ -2,12 +2,7 @@
 #include <stdlib.h>
 #define MAX_SIZE 5
 
-typedef struct
-{
-    int key;
-} element;
-
-element Queue[MAX_SIZE];
+int Queue[MAX_SIZE];
 int front = -1;
 int rear = -1;
 int count = 0;
@@ -29,7 +24,7 @@ void insert(int ele)
     if (front == -1)
         front = 0;
     count++;
-    Queue[rear].key = ele;
+    Queue[rear] = ele;
 }
 int deleteq()
 {
@@ -38,7 +33,7 @@ int deleteq()
     {
         printf("\nQueue Empty");
     }
-    value = Queue[front].key;
+    value = Queue[front];
     front = (front + 1) % MAX_SIZE;
     count--;
     return (value);
@@ -54,7 +49,7 @@ void display()
         printf("\n Elements in the Queue: \n");
         for (i = 0; i < count; i++)
         {
-            printf(" %d(%d)", Queue[j].key, j);
+            printf(" %d(%d)", Queue[j], j);
             j = (j + 1) % MAX_SIZE;
         }
     }
@@ -70,25 +65,17 @@ void main()
         switch (ch)
         {
         case 1:
-            if (Qfull())
-            {
-                printf("\nQueue Full");
-            }
-            else
-            {
+            
                 printf("\n Enter the value for insert\t");
                 scanf("%d", &ele);
                 insert(ele);
-            }
+            
             break;
         case 2:
-            if (!Qempty())
-            {
+            
                 ele = deleteq();
                 printf("\n%d", ele);
-            }
-            else
-                printf("\nQueue Empty");
+            
             break;
         case 3:
             display();

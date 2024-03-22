@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include<stdlib.h>
 int count = 0;
+
 void creategraph(int n, int a[20][20])
 {
     int i, j;

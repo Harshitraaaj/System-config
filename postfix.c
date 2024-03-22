@@ -2,17 +2,17 @@
 #include<string.h>
 char stack[100];
 int top = -1;
-void push(char x)
+void push(char ele)
 {
-    stack[++top] = x;
+    stack[++top] = ele;
 }
 char pop()
 {
-    char ret;
-    ret = stack[top];
+    char ele;
+    ele = stack[top];
     stack[top] = '\0';
     top--;
-    return ret;
+    return ele;
 }
 int inper(char ch)
 {
