@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 struct node
 {
     struct node *left;
@@ -97,37 +97,38 @@ int main()
             scanf("%d", &ch1);
             switch (ch1)
             {
-        case 1:
-            preorder(root);
-            break;
+            case 1:
+                preorder(root);
+                break;
 
-        case 2:
-            inorder(root);
+            case 2:
+                inorder(root);
+                break;
+
+            case 3:
+                postorder(root);
+                break;
+
+            default:
+                printf("\n Make Correct Choice");
+            }
             break;
 
         case 3:
-            postorder(root);
+
+            printf("Enter the key to be searched\n");
+            scanf("%d", &key);
+            pos = search(root, key);
+            if (pos == -1)
+                printf("\n Key is not found\n");
+            else
+                printf("key is found \n");
+
             break;
 
-        default:
-            printf("\n Make Correct Choice");
+        case 4:
+            exit(0);
         }
-        break;
-
-    case 3:
-
-        printf("Enter the key to be searched\n");
-        scanf("%d", &key);
-        pos = search(root, key);
-        if (pos == -1)
-            printf("\n Key is not found\n");
-        else
-            printf("key is found \n");
-
-        break;
-
-    case 4:exit(0);
     }
-}
-return 0;
+    return 0;
 }
