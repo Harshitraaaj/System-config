@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include<math.h>
 typedef struct polynomial
@@ -132,4 +132,76 @@ int main()
    }
     return 0;
 
+}
+*/
+#include <stdio.h>
+int q[10], ch, size, front = -1, rear = -1, item, i;
+void enqueue()
+{
+  if (rear == size - 1)
+    printf("Queue Overflow\n");
+  else
+  {
+  }
+  if (front == -1)
+    front = 0;
+  printf("Inset the element in queue\n: ");
+  scanf("%d", &item);
+  q[++rear] = item;
+}
+void dequeue()
+{
+  if (front == -1 || front > rear)
+  {
+    printf("Queue Underflow\n");
+  }
+  else
+  {
+    printf("Element deleted from queue is : %d\n", q[front]);
+    front++;
+  }
+}
+void display()
+{
+  if (front == -1 || front > rear)
+  {
+    printf("Queue is empty\n");
+  }
+  else
+  {
+    printf("Queue is : ");
+    while(front<=rear){
+      printf("%d\t",q[front]);
+      front++;
+    }
+  }
+}
+void main()
+{
+  printf("Enter the size of STACK\n");
+  scanf("%d", &size);
+  while(1)
+  {
+    printf("1.insert 2.delete 3.DISPLAY 4.Exit\n");
+    printf("Enter the Choice:\n");
+    scanf("%d", &ch);
+    switch (ch)
+    {
+    case 1:
+      enqueue();
+      break;
+    case 2:
+      dequeue();
+      break;
+    case 3:
+      display();
+      break;
+    case 4:
+    exit(0);
+
+    default:
+    printf("enter corrct choice\n");
+    break;
+    }
+  }
 }
